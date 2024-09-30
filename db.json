@@ -1,11 +1,37 @@
-{
-    "task": [
-        {
-            "id": 1,
-            "description": "my-description",
-            "status": "my-status",
-            "createdAt": "",
-            "updatedAt": ""
-        }
-    ]
-}   
+[
+  {
+    "id": 1,
+    "description": "Do laundry",
+    "status": "mark-in-progress",
+    "createdAt": "30/09/2024, 21:40:50",
+    "updatedAt": "30/09/2024, 21:40:50"
+  },
+  {
+    "id": 2,
+    "status": "",
+    "description": "Go for a run",
+    "createdAt": "30/09/2024, 21:40:52",
+    "updatedAt": "30/09/2024, 21:40:52"
+  },
+  {
+    "id": 3,
+    "status": "",
+    "description": "Go for a run",
+    "createdAt": "30/09/2024, 22:55:38",
+    "updatedAt": "30/09/2024, 22:55:38"
+  },
+  {
+    "id": 4,
+    "status": "",
+    "description": "Go for a run",
+    "createdAt": "30/09/2024, 22:55:49",
+    "updatedAt": "30/09/2024, 22:55:49"
+  },
+  {
+    "id": 5,
+    "status": "",
+    "description": "Go for a run",
+    "createdAt": "30/09/2024, 22:55:51",
+    "updatedAt": "30/09/2024, 22:55:51"
+  }
+]
