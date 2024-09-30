@@ -1,7 +1,11 @@
 {
   "name": "task-tracker",
+  "type": "commonjs",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "bin/index.ts",
+  "bin": {
+    "task-cli": "./bin/index.ts"
+  },
   "scripts": {
     "dev": "json-server --watch db.json"
   },
