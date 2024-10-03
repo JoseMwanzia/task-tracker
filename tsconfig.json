@@ -8,8 +8,9 @@
       "outDir": "dist"
     },
     "include": [
-      "index.ts",
       "bin/index.ts"
     ],
     "exclude": ["node_modules"]
 }
+
+// run `npx tsc` after edditing this file
