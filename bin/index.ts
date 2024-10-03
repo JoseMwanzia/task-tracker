@@ -97,37 +97,6 @@ yargs.command({
     })
   },
 
-  
-  handler: (argv: { id: number; update: string }) => {
-    fsModule.readFile('db.json', 'utf8', async function (err: string, data: string) {
-
-      if (err) {
-        console.log(`Error reading db.json`, err)
-        return;
-      }
-
-      const tasks = JSON.parse(data);
-
-      const selectedTask = tasks.find((task: { id: any }) => {
-        return argv.id === task.id
-      });
-
-      selectedTask.description = argv.update
-      selectedTask.updatedAt = updatedAt()
-
-      console.log(selectedTask);
-      
-      fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err: any) => {
-        if (err) {
-          console.log(`Error occured during writing of file`, err)
-        }
-      })
-
-    })
-  }
-  
-})
-
 yargs
   .demandCommand(1, 'You need to provide a valid command.') // Ensure a command is required. Requires at least 1 command
   .help() // Automatically provides help text for the CLI
