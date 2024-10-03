@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const yargs = require('yargs');
 const fsModule = require('fs')
+const yargs = require('yargs')
 
 const createdAt = () => {
   return new Date().toLocaleString('en-gb', {
@@ -26,27 +26,23 @@ const updatedAt = () => {
   })
 }
   
-// Define the 'greet' command with positional arguments 'name' and 'age'
+// Define the 'add' command with positional arguments 'name' and 'age'
 yargs.command({
-  command: 'add <task>', // Command 'add' with required 'task'
+  command: 'add <task>', // Command 'add' with required 'task' argument
   describe: 'Add a task',
   
-  builder: (yargs) => {
+  builder: (yargs: { positional: (arg0: string, arg1: { describe: string; type: string; demandOption: boolean }) => any }) => {
     return yargs
       .positional('task', {
         describe: 'The task to be added',
         type: 'string',
         demandOption: true, // Ensure 'name' is required
       })
-      .positional('age', {
-        describe: 'The age of the person (optional)',
-        type: 'number',
-      });
   },
 
-  handler: (argv) => {
+  handler: (argv: { task: any }) => {
 
-    fsModule.readFile('./db.json', 'utf8', async function(err, data) {
+    fsModule.readFile('./db.json', 'utf8', async function(err: any, data: string) {
       if (err) {
         console.log(`Error reading db.json:`, err)
         return;
@@ -69,9 +65,10 @@ yargs.command({
       
       tasks.push(task);
 
-      fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => { // null, 2 for indentation
+      fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err: any) => { // null, 2 for indentation
         if (err) {
           console.error(err);
+          return;
         }
       })
       
