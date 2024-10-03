@@ -74,9 +74,28 @@ yargs.command({
       
       console.log(`Task added successfully (ID: ${getNextId() - 1})`);
     })
-    
   },
 });
+
+
+yargs.command({
+  command: 'update <id> <update>',
+  describe: 'Updates a task with a certain id from the db.json file',
+
+  builder: (yargs: { positional: (arg0: string, arg1: { describe: string; type: string; demandOption: boolean }) => { (): any; new(): any; positional: { (arg0: string, arg1: { describe: string; type: string; demandOption: boolean }): any; new(): any } } }) => {
+    return yargs
+    .positional('id', {
+      describe: 'Give an id for the task to be updated',
+      type: 'number',
+      demandOption: true
+    })
+    
+    .positional('update', {
+      describe: 'Updates a task',
+      type: 'string',
+      demandOption: true
+    })
+  },
 
 yargs
   .demandCommand(1, 'You need to provide a valid command.') // Ensure a command is required. Requires at least 1 command
