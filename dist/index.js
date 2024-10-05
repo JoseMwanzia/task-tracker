@@ -130,11 +130,11 @@ yargs.command({
                 return argv.id === task.id;
             });
 
-            console.log(tasks.splice(7));
+            
+            const splicedArray = tasks.splice(argv.id -1)
+            console.log(splicedArray);
 
-            const spliceArray = tasks.splice(argv.id -1)
-
-            fsModule.writeFile('db.json', JSON.stringify(spliceArray, null, 2), (err) => {
+            fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
                 if (err) {
                     console.log(`Error occured during writing of file`, err);
                 }
