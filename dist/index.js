@@ -126,12 +126,8 @@ yargs.command({
                 return;
             }
             const tasks = JSON.parse(data);
-            const selectedTask = tasks.find((task) => {
-                return argv.id === task.id;
-            });
 
-            
-            const splicedArray = tasks.splice(argv.id -1)
+            const splicedArray = tasks.splice(argv.id -1 , 1)
             console.log(splicedArray);
 
             fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
