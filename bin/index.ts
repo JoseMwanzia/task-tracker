@@ -128,6 +128,47 @@ yargs.command({
   
 })
 
+
+yargs.command({
+    command: 'delete <id>',
+    describe: 'Deletes a task with an id from the db.json file',
+  
+    builder: (yargs: { positional: (arg0: string, arg1: { describe: string; type: string; demandOption: boolean }) => any }) => {
+      return yargs
+      .positional('ID', {
+        describe: 'Give an id for the task to be deleted',
+        type: 'number',
+        demandOption: true
+      })
+    },
+  
+    
+    handler: (argv: { id: number; update: string }) => {
+      fsModule.readFile('db.json', 'utf8', async function (err: string, data: string) {
+  
+        if (err) {
+          console.log(`Error reading db.json`, err)
+          return;
+        }
+  
+        const tasks = JSON.parse(data)
+        tasks.splice(argv.id - 1, 1);
+  
+        console.log(tasks.find(() => {
+          
+        }));
+        
+        fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err: any) => {
+          if (err) {
+            console.log(`Error occured during writing of file`, err)
+          }
+        })
+  
+      })
+    }
+    
+  })
+
 yargs
   .demandCommand(1, 'You need to provide a valid command.') // Ensure a command is required. Requires at least 1 command
   .help() // Automatically provides help text for the CLI
