@@ -1,20 +1,8 @@
 #!/usr/bin/env node
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 const fsModule = require('fs');
 const yargs = require('yargs');
-const createdAt = () => {
-    return new Date().toLocaleString('en-gb', {
-        day: "numeric",
-        month: "numeric",
-        year: "numeric",
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    });
-};
-const updatedAt = () => {
+const timestamp = () => {
     return new Date().toLocaleString('en-gb', {
         day: "numeric",
         month: "numeric",
@@ -27,7 +15,7 @@ const updatedAt = () => {
 };
 // Define the 'add' command with positional arguments 'name' and 'age'
 yargs.command({
-    command: 'add <task>', // Command 'add' with required 'task'
+    command: 'add <task>', // Command 'add' with required 'task' argument
     describe: 'Add a task',
     builder: (yargs) => {
         return yargs
@@ -35,10 +23,6 @@ yargs.command({
             describe: 'The task to be added',
             type: 'string',
             demandOption: true, // Ensure 'name' is required
-        })
-            .positional('age', {
-            describe: 'The age of the person (optional)',
-            type: 'number',
         });
     },
     handler: (argv) => {
@@ -56,8 +40,8 @@ yargs.command({
                 id: getNextId(),
                 status: '',
                 description: argv.task,
-                createdAt: createdAt(),
-                updatedAt: updatedAt()
+                timestamp: timestamp(),
+                updatedAt: timestamp()
             };
             tasks.push(task);
             fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
@@ -97,7 +81,7 @@ yargs.command({
                 return argv.id === task.id;
             });
             selectedTask.description = argv.update;
-            selectedTask.updatedAt = updatedAt();
+            selectedTask.updatedAt = timestamp();
             console.log(selectedTask);
             fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
                 if (err) {
@@ -107,17 +91,16 @@ yargs.command({
         });
     }
 });
-
 yargs.command({
     command: 'delete <id>',
-    describe: 'Deletes a task with a certain id from the db.json file',
+    describe: 'Deletes a task with an id from the db.json file',
     builder: (yargs) => {
         return yargs
-            .positional('id', {
+            .positional('ID', {
             describe: 'Give an id for the task to be deleted',
             type: 'number',
             demandOption: true
-        })
+        });
     },
     handler: (argv) => {
         fsModule.readFile('db.json', 'utf8', async function (err, data) {
@@ -126,10 +109,11 @@ yargs.command({
                 return;
             }
             const tasks = JSON.parse(data);
-
-            const splicedArray = tasks.splice(argv.id -1 , 1)
-            console.log(splicedArray);
-
+            const deletedtask = tasks.find((deleteTask) => {
+                return argv.id === deleteTask.id;
+            });
+            console.log(deletedtask);
+            tasks.splice(argv.id - 1, 1);
             fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
                 if (err) {
                     console.log(`Error occured during writing of file`, err);
