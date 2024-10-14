@@ -194,6 +194,41 @@ yargs.command({
   }
 })
 
+yargs.command({
+  command: 'mark-done <id>',
+  describe: 'mark a task as done',
+
+  builder: (yargs: { positional: (arg0: string, arg1: { describe: string; type: string; demandOption: boolean; }) => any; }) => {
+    return yargs.positional('ID', {
+      describe: 'provide an id to mark it as done',
+      type: 'number',
+      demandOption: true
+    })
+  },
+
+  handler: (argv: { id: any; }) => {
+    fsModule.readFile('db.json', 'utf8', (err: any, data: string) => {
+      if (err) {
+        console.log(err)
+      }
+
+      const tasks = JSON.parse(data);
+      const foundTask = tasks.find((task: { id: any; }) => {
+        return task.id === argv.id
+      })
+
+      foundTask.status = 'done'
+
+      fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err: any) => {
+        if (err) {
+          console.log(err)
+        }
+      })
+
+    })
+  }
+})
+
 yargs
   .demandCommand(1, 'You need to provide a valid command.') // Ensure a command is required. Requires at least 1 command
   .help() // Automatically provides help text for the CLI
