@@ -223,8 +223,62 @@ yargs.command({
         if (err) {
           console.log(err)
         }
+        console.log('marked as done')
       })
 
+    })
+  }
+})
+
+yargs.command({
+  command: 'list [done] [todo] [in-progress]',
+  describe: 'lists  all the tasks',
+
+  builder: (yargs) => {
+    return yargs
+    .positional('done', {
+      describe: 'list all tasks or only completed task when `done` is provided',
+      type: 'string',
+      default: 'all'
+    })
+    .positional('todo', {
+      describe: 'list all tasks or only completed task when `todo` is provided',
+      type: 'string',
+    })
+    .positional('in-progress', {
+      describe: 'list all tasks or only completed task when `in-progress` is provided',
+      type: 'string',
+    })
+  },
+
+  handler: (argv) => {
+    console.log(argv.done);
+    
+    fsModule.readFile('db.json', 'utf8', (err, data) => {
+      if (err) {
+        console.log(err)
+      }
+      const tasks = JSON.parse(data)
+      
+      if (argv.done === 'done') {
+        const doneTasks = tasks.filter((task) => {
+          return task.status === 'done'
+        });
+        console.log(doneTasks);
+      } else if (argv.done === 'todo') {
+        const addedTasks = tasks.filter((task) => {
+          return task.status === 'todo'
+        });
+        console.log(addedTasks);
+      } else if (argv.done === 'in-progress') {
+        const inProgresstasks = tasks.filter((task) => {
+          return task.status === 'in progress'
+        });
+        console.log(inProgresstasks);
+      } else {
+        console.log(tasks)
+      }
+      
     })
   }
 })
