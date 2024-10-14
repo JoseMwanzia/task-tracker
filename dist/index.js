@@ -96,7 +96,7 @@ yargs.command({
     describe: 'Deletes a task with an id from the db.json file',
     builder: (yargs) => {
         return yargs
-            .positional('ID', {
+            .positional('id', {
             describe: 'Give an id for the task to be deleted',
             type: 'number',
             demandOption: true
@@ -112,11 +112,39 @@ yargs.command({
             const deletedtask = tasks.find((deleteTask) => {
                 return argv.id === deleteTask.id;
             });
-            console.log(deletedtask);
             tasks.splice(argv.id - 1, 1);
+            console.log(deletedtask);
             fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
                 if (err) {
                     console.log(`Error occured during writing of file`, err);
+                }
+            });
+        });
+    }
+});
+yargs.command({
+    command: 'mark-in-progress <id>',
+    describe: 'mark a task as in progress',
+    builder: (yargs) => {
+        return yargs.positional('ID', {
+            describe: 'provide an id to mark the task as in progress',
+            type: 'number',
+            demandOption: true
+        });
+    },
+    handler: (argv) => {
+        fsModule.readFile('db.json', 'utf8', (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            const tasks = JSON.parse(data);
+            const foundTask = tasks.find((task) => {
+                return task.id === argv.id;
+            });
+            foundTask.status = 'in progress';
+            fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err) => {
+                if (err) {
+                    console.error('There was an error writting the file', err);
                 }
             });
         });
