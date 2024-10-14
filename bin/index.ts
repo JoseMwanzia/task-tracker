@@ -45,7 +45,7 @@ yargs.command({
       
       const task = {
         id: getNextId(),
-        status: '',
+        status: 'todo',
         description: argv.task,
         timestamp: timestamp(),
         updatedAt: timestamp()
