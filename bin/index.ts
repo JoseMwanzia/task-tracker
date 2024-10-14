@@ -159,6 +159,41 @@ yargs.command({
     
 })
 
+yargs.command({
+  command: 'mark-in-progress <id>',
+  describe: 'mark a task as in progress',
+
+  builder: (yargs: { positional: (arg0: string, arg1: { describe: string; type: string; demandOption: boolean; }) => any; }) => {
+    return yargs.positional('ID', {
+      describe: 'provide an id to mark the task as in progress',
+      type: 'number',
+      demandOption: true
+    })
+  },
+
+  handler: (argv: { id: number; }) => {
+    fsModule.readFile('db.json', 'utf8', (err: any, data: string) => {
+      if (err) {
+        console.log(err);
+      }
+
+      const tasks = JSON.parse(data);
+      const foundTask = tasks.find((task: { id: number; }) => {
+        return task.id === argv.id
+      });
+
+      foundTask.status = 'in progress';
+
+      fsModule.writeFile('db.json', JSON.stringify(tasks, null, 2), (err: any) => {  // null, 2 for indentation
+        if (err) {
+          console.error('There was an error writting the file', err)
+        }
+      })
+
+    })
+  }
+})
+
 yargs
   .demandCommand(1, 'You need to provide a valid command.') // Ensure a command is required. Requires at least 1 command
   .help() // Automatically provides help text for the CLI
