@@ -2,19 +2,7 @@
 const fsModule = require('fs')
 const yargs = require('yargs')
 
-const createdAt = () => {
-  return new Date().toLocaleString('en-gb', {
-    day: "numeric",
-    month: "numeric",
-    year: "numeric",
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  })
-}
-
-const updatedAt = () => {
+const timestamp = () => {
   return new Date().toLocaleString('en-gb', {
     day: "numeric",
     month: "numeric",
@@ -59,8 +47,8 @@ yargs.command({
         id: getNextId(),
         status: '',
         description: argv.task,
-        createdAt: createdAt(),
-        updatedAt: updatedAt()
+        timestamp: timestamp(),
+        updatedAt: timestamp()
       }
       
       tasks.push(task);
@@ -113,7 +101,7 @@ yargs.command({
       });
 
       selectedTask.description = argv.update
-      selectedTask.updatedAt = updatedAt()
+      selectedTask.updatedAt = timestamp()
 
       console.log(selectedTask);
       
