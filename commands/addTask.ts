@@ -1,5 +1,4 @@
 import { readTasksFromFile, writeTasksToFile, timestamp } from "./helper.js";
-import fsModule from 'fs';
 
 // Define the 'add' command with positional arguments 'task'
 const addTask = {
@@ -10,50 +9,34 @@ const addTask = {
     try {
       let tasks = await readTasksFromFile();
 
-        if (tasks.length === 0) {
-            console.log('File is empty, initializing with an empty array.');
-
-            const firstTask = {
-                id: 1,
-                status: "todo",
-                description: argv.task,
-                timestamp: timestamp(),
-                updatedAt: timestamp(),
-            }
-
-            tasks = firstTask
-
-            try {
-                fsModule.writeFile(
-                    "./db.json",
-                    JSON.stringify(tasks, null, 2),
-                    (err) => {
-                        // null, 2 for indentation
-                        if (err) {
-                        console.log(`Error occured during writing of file `, err);
-                        return;
-                        }
-                    }
-                );
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
-      const getNextId = () => {
-        let currentId = tasks[tasks.length - 1].id ;
-        return ++currentId;
-      };
-
-       const task = {
-        id: getNextId(),
+      let task = {
+        id: 1,
         status: "todo",
         description: argv.task,
         timestamp: timestamp(),
         updatedAt: timestamp(),
       };
+    
+      if (tasks.length === 0) {
+        console.log("Tasks are empty, initialized first task.");
 
-      tasks.push(task);
+        tasks = [task];
+
+        try {
+            return await writeTasksToFile(tasks);
+        } catch (error) {
+            console.log(error);
+        }
+      }
+
+      const getNextId = () => {
+        let currentId = tasks[tasks.length - 1].id;
+        return ++currentId;
+      };
+
+      const newTask = {...task, id: getNextId()}
+
+      tasks.push(newTask);
 
       await writeTasksToFile(tasks);
 
