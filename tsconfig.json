@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
       "target": "ES2020",
-      "module": "CommonJS",
+      "module": "ES2020",
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "outDir": "dist"
+      "outDir": "dist",
     },
     "include": [
       "bin/index.ts"
@@ -13,4 +13,4 @@
     "exclude": ["node_modules"]
 }
 
-// run `npx tsc` after edditing this file
+// run `tsc` after editting this file or any TS file
