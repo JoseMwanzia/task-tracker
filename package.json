@@ -1,10 +1,10 @@
 {
   "name": "task-tracker",
-  "type": "commonjs",
+  "type": "module",
   "version": "1.0.0",
   "main": "bin/index.ts",
   "bin": {
-    "task-cli": "./dist/index.js"
+    "task-cli": "./dist/bin/index.js"
   },
   "scripts": {
     "dev": "json-server --watch db.json"
@@ -17,6 +17,6 @@
     "yargs": "13.2"
   },
   "devDependencies": {
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.3"
   }
 }
