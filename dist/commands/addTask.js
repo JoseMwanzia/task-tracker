@@ -6,14 +6,13 @@ const addTask = {
     handler: async (argv) => {
         try {
             let tasks = await readTasksFromFile();
-            let task = {
+            const task = {
                 id: 1,
                 status: "todo",
                 description: argv.task,
                 timestamp: timestamp(),
                 updatedAt: timestamp(),
             };
-            ;
             if (tasks.length === 0) {
                 console.log("Tasks are empty, initialized first task.");
                 tasks = [task];
@@ -28,13 +27,6 @@ const addTask = {
                 let currentId = tasks[tasks.length - 1].id;
                 return ++currentId;
             };
-            //   const task = {
-            //     id: getNextId(),
-            //     status: "todo",
-            //     description: argv.task,
-            //     timestamp: timestamp(),
-            //     updatedAt: timestamp(),
-            //   };
             const newTask = { ...task, id: getNextId() };
             tasks.push(newTask);
             await writeTasksToFile(tasks);
