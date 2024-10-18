@@ -50,7 +50,7 @@ these positional argements updates a task, with an id of 1, from your db.json fi
 ## Screenshots
 
 
-![App Screenshot](screenshot.png)
+![App Screenshot](./screenshot.png)
 ## Badges
 
 Add badges from somewhere like: [shields.io](https://shields.io/)
