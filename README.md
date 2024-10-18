@@ -1,8 +1,9 @@
 
-# CLI Task
+# Task Tracker
 
 Task tracker is a project used to track and manage your tasks. In this task, I built a simple command line interface (CLI) to track what you need to do, what you have done, and what you are currently working on. The project utilizes Typescript for type safety.
 
+[Project Url](https://github.com/JoseMwanzia/task-tracker)
 
 ## Installation
 
